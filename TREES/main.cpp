@@ -1,0 +1,140 @@
+#include <iostream>
+#include<queue>
+
+using namespace std;
+
+struct node {
+int data;
+node*left;
+node*right;
+
+};
+
+node* insert(node *root,int x )
+{
+   node *temp=new node();
+   temp->left=temp->right=NULL;
+   temp->data=x;
+   if(root==NULL)
+   {
+   root=temp;
+   }
+   else if(root->data>=x)
+    {
+       root->left=insert(root->left,x);
+    }
+   else{
+   root->right=insert(root->right,x);
+   }
+   return root;
+
+}
+
+
+int min(node *root )
+{
+   node*temp=root;
+   while(temp->left!=NULL)
+   {
+      temp=temp->left;
+   }
+   return temp->data;
+}
+int minUsingRecursion(node *root)
+{
+   if(root==NULL)
+      return -1;
+   else if(root->left==NULL)
+      return root->data;
+   return minUsingRecursion(root->left);
+
+}
+int maxUsingRecursion(node*root)
+{
+   if(root==NULL)
+      return -1;
+   else if(root->right==NULL)
+      return root->data;
+   return maxUsingRecursion(root->right);
+}
+int max(node *root )
+{
+   node*temp=root;
+   while(temp->right!=NULL)
+   {
+      temp=temp->right;
+   }
+   return temp->data;
+}
+bool search(node *root ,int x )
+{  if(root==NULL) return false;
+ else if(root->data==x) return true;
+ else if(root->data>=x) return search(root->left,x);
+ else return search(root->right,x);
+}
+
+int findHeight(node *root)
+{
+   if(root==NULL)
+      return -1;
+int leftTree= findHeight(root->left);
+int rightTree=findHeight(root->right);
+   return max(leftTree,rightTree)+1;
+}
+
+void levelOrder(node *root)
+{
+   queue<node*>Q;
+   Q.push(root);
+   while(!Q.empty())
+      {
+   node*current=Q.front();
+   cout<<current->data<<" ";
+   if(current->left!=NULL)
+      Q.push(current->left);
+   if(current->right!=NULL)
+      Q.push(current->right);
+      Q.pop();
+   }
+
+}
+bool IsBinaryTree(node*root)
+{
+   if(root->left==NULL) return ;
+   if(root->right==NULL) return;
+ bool left= IsBinaryTree(root->left);
+ bool right=IsBinaryTree(root->right);
+if(left&&right)
+   return true;
+else
+   return false;
+
+
+}
+int main()
+{
+   node *root=NULL;
+   root= insert(root,20);
+   root= insert(root,10);
+   root= insert(root,30);
+   root= insert(root,25);
+/*
+ cout<<"enter the number you want to search"<<endl;
+ int num;
+cin>>num;
+if(search(root,num)){cout<<"found it "<<endl;}
+else {
+   cout<<"not here"<<endl;
+}
+*/
+cout <<"height of the tree is "<<findHeight(root)<<endl;
+cout<<"max element in tree is "<<maxUsingRecursion(root)<<endl;
+cout<<"min element in tree is "<<minUsingRecursion(root)<<endl;
+  // remove();
+levelOrder(root);
+if(IsBinaryTree(root))
+   cout<<"yes its a binary tree"<<endl;
+else
+   cout<<" no its not a bt"<<endl;
+
+}

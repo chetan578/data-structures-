@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1537964799 source:c:\users\chetan578\desktop\linked_list\main.cpp
+	<iostream>
+
+1541144546 source:c:\users\chetan578\desktop\c++ codes\new _ codes\linked_list\main.cpp
+	<iostream>
+	<vector>
+
